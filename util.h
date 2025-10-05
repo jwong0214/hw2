@@ -13,20 +13,31 @@
 template <typename T>
 std::set<T> setIntersection(std::set<T>& s1, std::set<T>& s2)
 {
-
-
-
-
-
+  std::set<T> result;
+  // iterate over smaller set for fewer log lookups
+  if (s1.size() < s2.size()) {
+    for (typename std::set<T>::const_iterator it = s1.begin(); it != s1.end(); ++it) {
+      if (s2.find(*it) != s2.end()) {
+        result.insert(*it);
+      }
+    }
+  } else {
+    for (typename std::set<T>::const_iterator it = s2.begin(); it != s2.end(); ++it) {
+      if (s1.find(*it) != s1.end()) {
+        result.insert(*it);
+      }
+    }
+  }
+  return result;
 }
 template <typename T>
 std::set<T> setUnion(std::set<T>& s1, std::set<T>& s2)
 {
-
-
-
-
-
+  std::set<T> result = s1; // copy s1
+  for (typename std::set<T>::const_iterator it = s2.begin(); it != s2.end(); ++it) {
+    result.insert(*it); // insert is log(size)
+  }
+  return result;
 }
 
 /***********************************************/
